@@ -34,8 +34,8 @@ def welcome():
     f"/api/v1.0/precipitation<br>"
     f"/api/v1.0/stations<br>"
     f"/api/v1.0/tobs<br>"
-    f"/api.v1.0/temp/<start><br>"
-    f"/api/v1.0/temp/<start>/<end><br>"
+    f"/api.v1.0/temp/month-day-year<br>"
+    f"/api.v1.0/temp/month-day-year/month-day-year<br>"
   )
 
 @app.route("/api/v1.0/precipitation")
@@ -93,21 +93,21 @@ def temps():
 @app.route("/api.v1.0/temp/<start>/<end>")
 def stats(start=None, end=None):
     session = Session(engine)
-    # calculate TMIN, TAVG, TMAX with start and stop
     start = dt.datetime.strptime(start, "%m%d%Y")
     end = dt.datetime.strptime(end, "%m%d%Y")
+
     #Query
     select = [func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs)]
     if not end:
         final_result= session.query(*select).\
-            filter(Measurement.date >= start.all()
+        filter(Measurement.date >= start.all())
         final_tobs= list(np.ravel(final_result))
         return jsonify(final_tobs)
     final_result= session.query(*select).\
         filter(Measurement.date >=start).\
         filter(Measurement.date <=end).all()
     final_tobs= list(np.ravel(final_result))
-    return jsonify(final_tobs=final_tobs)            
+    return jsonify(final_tobs)            
 
     #query = session.query(*sel).filter(start).filter(end).all()
 
