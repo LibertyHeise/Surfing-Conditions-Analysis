@@ -9,11 +9,11 @@ app = Flask(__name__)
 # 3. Define static routes
 @app.route("/")
 def index():
-    return "Hello, world!"
+  return "All Available Routes"
 
 
-@app.route("/about")
-def about():
+@app.route("/api/v1.0/precipitation")
+def /api/v1.0/precipitation():
     name = "Peleke"
     location = "Tien Shan"
 
@@ -22,7 +22,7 @@ def about():
 
 @app.route("/contact")
 def contact():
-    email = "peleke@example.com"
+    email = "peleke@exple.com"
 
     return f"Questions? Comments? Complaints? Shoot an email to {email}."
 
